@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-class Music extends BaseModel{
+public class Music extends BaseModel{
     private String mscName;
     private String mscAvatar;
     private String mscIntr;

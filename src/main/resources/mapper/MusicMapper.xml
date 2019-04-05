@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wanderers.wanderers.app.dao.MusicMapper">
+    <resultMap id="musicMap" type="com.wanderers.wanderers.app.model.Music">
+        <id property="mscID" column="msc_id"/>
+        <result property="mscName" column="msc_name"/>
+        <result property="mscAvatar" column="msc_avatar"/>
+        <result property="mscIntr" column="msc_intr"/>
+        <result property="mscListens" column="msc_listens"/>
+        <result property="mscDownloads" column="msc_downloads"/>
+        <result property="mscPrice" column="msc_prices"/>
+        <association property="musician" javaType="com.wanderers.wanderers.app.model.Musician">
+            <id property="musicianID" column="musicianID"/>
+        </association>
+    </resultMap>
+    <!--查找-->
+    <select id="find" resultMap="com.wanderers.wanderers.app.model.Music">
+        SELECT
+        msc_id,
+        msc_name,
+        msc_avatar,
+        msc_intr,
+        msc_listens,
+        msc_downloads,
+        msc_price,
+        del_flag as 'del_flag'
+        FROM music
+        <where>
+            <if test="msc_name !=null and msc_name !=''">
+                AND msc_name = #{mscName}
+            </if>
+        </where>
+    </select>
+
+    <select id="find" resultMap="com.wanderers.wanderers.app.model.Music">
+        SELECT * FROM music
+        LEFT JOIN mscn_msc mm ON music.msc_id=mm.msc_id
+        JOIN mscn ON mscn_id = mm.mscn_id
+        WHERE musician.mscn_name = #{mscnName}
+    </select>
+
+    <!--插入-->
+    <insert id="insert">
+        INSERT INTO music (
+        msc_name,
+        msc_avatar,
+        msc_intr,
+        msc_listens,
+        msc_downloads,
+        msc_price,
+
+        del_flag
+        )VALUES (
+        #{username},
+        #{password},
+        '0'
+        )
+    </insert>
+
+    <!--更新-->
+    <update id="update">
+        UPDATE USER SET
+        user_name = #{username},
+        password = #{password},
+        WHERE id = #{id}
+    </update>
+
+    <!--删除-->
+    <update id="delete" parameterType="java.lang.Long">
+        UPDATE USER SET
+        del_flag = '1'
+        WHERE id=#{id}
+    </update>
+</mapper>

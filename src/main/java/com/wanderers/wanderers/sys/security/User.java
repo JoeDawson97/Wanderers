@@ -17,6 +17,7 @@ public class User extends BaseModel implements UserDetails {
 
     private String username;
     private String password;
+    private boolean isMusician;
 
 
     @Override
@@ -31,6 +32,8 @@ public class User extends BaseModel implements UserDetails {
     public String getUsername() {
         return this.username;
     }
+
+    public Boolean getStatus() {return this.isMusician;}
 
     @Override
     @JsonIgnore
