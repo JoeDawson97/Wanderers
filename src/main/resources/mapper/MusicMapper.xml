@@ -12,11 +12,12 @@
         <result property="mscDownloads" column="msc_downloads"/>
         <result property="mscPrice" column="msc_prices"/>
         <association property="musician" javaType="com.wanderers.wanderers.app.model.Musician">
-            <id property="musicianID" column="musicianID"/>
+            <id property="mscnID" column="mscn_id"/>
+            <result property="mscnName" column="mscn_name"/>
         </association>
     </resultMap>
     <!--查找-->
-    <select id="find" resultMap="com.wanderers.wanderers.app.model.Music">
+    <select id="find" resultMap="musicMap">
         SELECT
         msc_id,
         msc_name,
@@ -34,7 +35,7 @@
         </where>
     </select>
 
-    <select id="find" resultMap="com.wanderers.wanderers.app.model.Music">
+    <select id="find" resultMap="musicMap">
         SELECT * FROM music
         LEFT JOIN mscn_msc mm ON music.msc_id=mm.msc_id
         JOIN mscn ON mscn_id = mm.mscn_id
